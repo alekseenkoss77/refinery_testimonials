@@ -1,0 +1,34 @@
+<% content_for :body do %>
+  <%= @page.content_for(:body) %>
+  <a href="" class="testimonial_link" onclick="$('#new_testimonial').toggle();return false;" >Оставить отзыв</a>
+  <div class="clear"></div>
+  <div class="new_testimonial" style="display:none;" id="new_testimonial">
+    <%= form_for :testimonial, :url => "/testimonials/create" do |f| %>
+      <div class="input_field">
+        <%= f.label :name, "Имя" %><br/>
+        <%= f.text_field :name %>
+      </div>
+      <div class="input_field">
+        <%= f.label :email, "E-mail" %><br/>
+        <%= f.text_field :email %>
+      </div>
+      <div class="clear"></div>
+      <div class="input_area">
+        <%= f.label :message, "Отзыв" %><br/>
+        <%= f.text_area :message %>
+      </div>
+      <%= f.submit "Отправить", :class => "submit_input" %>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+  <div id="testimonials">
+    <% @testimonials.each do |testimonial| %>
+      <div class="testimonial_item">
+        <%= raw testimonial.message %>
+      </div>
+      <div class="testimonial_from"><%= testimonial.name %>, <%= testimonial.created_at %></div>
+      <div class="clear"></div>
+    <% end %>
+  </div>
+<% end %>
+<%= render '/refinery/content_page' %>
